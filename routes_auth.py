@@ -26,6 +26,7 @@ def _login_page(request: Request, error: str = "", status: int = 200):
     """Render templates/login.html with an optional error message."""
     theme = default_portfolio()["theme"]
     return templates.TemplateResponse(
+        request,
         "login.html",
         {"request": request, "error": error, "theme": theme,
          "settings": default_portfolio()["settings"]},

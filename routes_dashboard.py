@@ -46,6 +46,7 @@ def _dash(request: Request, msg: str = ""):
     p = storage.load_portfolio()
     sections = sorted(p.get("sections", []), key=lambda s: s.get("order", 99))
     return templates.TemplateResponse(
+        request,
         "dashboard.html",
         {"request": request, "p": p, "sections": sections,
          "warn": security.is_default_password(), "msg": msg,

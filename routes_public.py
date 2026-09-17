@@ -54,7 +54,7 @@ def _public_context(request: Request, p: dict) -> dict:
 def home(request: Request):
     """Portfolio homepage - renders the chosen themes/<name>.html from JSON."""
     p = storage.load_portfolio()
-    return templates.TemplateResponse(_theme_template(p), _public_context(request, p))
+    return templates.TemplateResponse(request, _theme_template(p), _public_context(request, p))
 
 
 @router.get("/p/{slug}", response_class=HTMLResponse)
@@ -63,4 +63,4 @@ def by_slug(request: Request, slug: str):
     p = storage.load_portfolio()
     if slug != p.get("settings", {}).get("slug", ""):
         return HTMLResponse("<h2>Portfolio not found</h2>", status_code=404)
-    return templates.TemplateResponse(_theme_template(p), _public_context(request, p))
+    return templates.TemplateResponse(request, _theme_template(p), _public_context(request, p))
