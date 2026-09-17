@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env
+.git/
+.gitignore
+README.md
+idea.md
+AGENT.md
+data/*.json
+data/*.tmp
+static/uploads/*
+!static/uploads/.gitkeep
+.pytest_cache/
+.mypy_cache/

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{# login.html - owner login form. Receives: error (message or empty). #}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="wrap">
+  <h2>Owner Login</h2>
+  <p class="muted">Default: <b>admin / admin123</b> (change after first login)</p>
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+  <form class="card" method="post" action="/login">
+    <label>Username</label><input name="username" required>
+    <label>Password</label><input name="password" type="password" required>
+    <button type="submit">Login</button>
+  </form>
+  <p><a href="/">Back to portfolio</a></p>
+</div>
+{% endblock %}

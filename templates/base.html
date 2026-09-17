@@ -1,0 +1,27 @@
+<!doctype html>
+{# base.html - shared page shell. Every other template extends this file.
+   It sets the <head>, theme colors (as CSS variables), and the stylesheet.
+   Page templates only fill in the "title" and "content" blocks below. #}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PortfolioCMS{% endblock %} - {{ settings.siteTitle }}</title>
+  <meta name="description" content="{{ settings.description }}">
+  <style>
+    /* Theme colors come from the saved portfolio theme (dashboard -> Theme). */
+    :root {
+      --primary: {{ theme.primaryColor }};
+      --secondary: {{ theme.secondaryColor }};
+      --bg: {{ theme.backgroundColor }};
+      --text: {{ theme.textColor }};
+      --radius: {{ theme.borderRadius }};
+    }
+  </style>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {% block nav %}{% endblock %}
+  {% block content %}{% endblock %}
+</body>
+</html>

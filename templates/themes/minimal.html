@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{# minimal.html - the SIMPLEST theme. Flat sections, no cards, lots of air.
+   This is the best file to COPY when making your own theme:
+   copy it to themes/<yourname>.html, tweak, save - done. #}
+{% block title %}{{ p.profile.name }}{% endblock %}
+{% block content %}
+<style>
+  /* Minimal personality: flat, borderless, dividers instead of cards. */
+  .theme-minimal { max-width: 680px; }
+  .theme-minimal .card { border: none; border-bottom: 1px solid #e5e7eb;
+    border-radius: 0; padding: 24px 0; background: transparent; }
+  .theme-minimal .hero { background: transparent; color: inherit;
+    text-align: left; padding: 64px 0 32px; }
+  .theme-minimal .hero a.btn { background: var(--primary); color: #fff; }
+  .theme-minimal h3 { font-size: 0.85em; text-transform: uppercase;
+    letter-spacing: 2px; opacity: 0.6; }
+</style>
+<div class="wrap theme-minimal">
+  <h1>{{ settings.siteTitle }}</h1>
+  <p class="muted">{{ settings.description }}</p>
+  {% include "themes/_sections.html" %}
+</div>
+{% endblock %}

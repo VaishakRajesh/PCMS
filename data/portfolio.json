@@ -1,0 +1,90 @@
+{
+  "profile": {
+    "name": "vaishak rajesh",
+    "title": "Full Stack Developer",
+    "tagline": "Building modern web applications",
+    "bio": "Write a short intro about yourself here.\r\nhai",
+    "profileImage": "",
+    "resume": "",
+    "location": "hai",
+    "email": "",
+    "phone": ""
+  },
+  "social": {
+    "github": "",
+    "linkedin": "",
+    "twitter": "",
+    "email": ""
+  },
+  "theme": {
+    "template": "modern",
+    "mode": "light",
+    "primaryColor": "#4f46e5",
+    "secondaryColor": "#8b5cf6",
+    "backgroundColor": "#ffffff",
+    "textColor": "#111827",
+    "borderRadius": "12px",
+    "animations": false
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "title": "Hero",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "about",
+      "type": "about",
+      "title": "About",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "skills",
+      "type": "skills",
+      "title": "Skills",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "projects",
+      "type": "projects",
+      "title": "Projects",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "experience",
+      "type": "experience",
+      "title": "Experience",
+      "visible": true,
+      "order": 5
+    },
+    {
+      "id": "education",
+      "type": "education",
+      "title": "Education",
+      "visible": true,
+      "order": 6
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "title": "Contact",
+      "visible": true,
+      "order": 7
+    }
+  ],
+  "skills": [],
+  "projects": [],
+  "experience": [],
+  "education": [],
+  "certifications": [],
+  "settings": {
+    "siteTitle": "My Portfolio",
+    "description": "Portfolio built with PortfolioCMS",
+    "slug": "my-portfolio"
+  }
+}

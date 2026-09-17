@@ -1,0 +1,28 @@
+# Render Blueprint — one-click Docker deploy on the Free plan.
+# Usage: push this repo to GitHub, then in Render: New -> Blueprint -> pick repo.
+# Or: New -> Web Service -> pick repo -> Runtime: Docker -> Dockerfile: ./Dockerfile
+services:
+  - type: web
+    name: pcms
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    # Render sets PORT automatically; the Dockerfile CMD already uses ${PORT}.
+    healthCheckPath: /
+    envVars:
+      # Random session secret (required — do NOT keep dev default in prod).
+      - key: SECRET_KEY
+        generateValue: true
+      # Owner login, seeded only on first boot when data/users.json is missing.
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+      # Optional persistence (needs a PAID disk — Free has ephemeral storage):
+      # 1. Add a disk in Render dashboard mounted at /var/data
+      # 2. Uncomment the lines below:
+      # - key: DATA_DIR
+      #   value: /var/data
+      # NOTE: uploads (static/uploads/resumes) stay ephemeral on Free.
+      # On a paid plan, either keep uploads ephemeral or move UPLOAD_DIR
+      # under your disk mount in config.py.

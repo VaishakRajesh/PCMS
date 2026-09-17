@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{# professional.html - corporate theme: navy header band, structured rows.
+   Same content, different look. Copy minimal.html to add your own theme. #}
+{% block title %}{{ p.profile.name }}{% endblock %}
+{% block content %}
+<style>
+  /* Professional personality: navy band, serif headings, tidy rows. */
+  .theme-professional .hero { background: #1f3a5f; border-radius: 0;
+    text-align: left; padding: 40px 32px; }
+  .theme-professional h1, .theme-professional h3 {
+    font-family: Georgia, "Times New Roman", serif; }
+  .theme-professional .card { border-radius: 4px; }
+  .theme-professional .grid { grid-template-columns: 1fr 1fr; }
+</style>
+<div class="wrap theme-professional">
+  <h1>{{ settings.siteTitle }}</h1>
+  <p class="muted">{{ settings.description }}</p>
+  {% include "themes/_sections.html" %}
+</div>
+{% endblock %}
