@@ -7,7 +7,7 @@ services:
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
-    # Render sets PORT automatically; the Dockerfile CMD already uses ${PORT}.
+    # Render sets PORT automatically; standalone server.js reads PORT + HOSTNAME env.
     # Health check hits the landing page (always public, always fast).
     healthCheckPath: /
     envVars:

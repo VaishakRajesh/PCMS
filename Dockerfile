@@ -19,7 +19,8 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
-    PORT=3000
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
 RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
@@ -29,5 +30,7 @@ RUN mkdir -p /app/data /app/public/uploads && chown -R nextjs:nodejs /app/data /
 USER nextjs
 VOLUME ["/app/data", "/app/public/uploads"]
 EXPOSE 3000
-# Hosts like Render inject $PORT; standalone server.js respects it.
-CMD ["sh", "-c", "node server.js --port ${PORT:-3000} --hostname 0.0.0.0"]
+# Standalone server.js reads PORT + HOSTNAME env (Render injects $PORT).
+# Do NOT pass --port/--hostname flags — server.js ignores them and would
+# bind localhost:3000, causing Render health-check 502.
+CMD ["node", "server.js"]
