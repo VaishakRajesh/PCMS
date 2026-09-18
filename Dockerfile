@@ -1,30 +1,33 @@
-# PortfolioCMS — Render Free tier Dockerfile
-# Small + fast: python:3.11-slim, single uvicorn worker (~100-200MB RAM).
+# PortfolioCMS — production Dockerfile (Next.js standalone output).
+# Multi-stage: tiny final image (~150MB), runs as non-root user.
+# NOTE: JSON data lives in /app/data (and uploads in /app/public/uploads).
+# These MUST be persistent volumes/disks, or portfolios reset on redeploy.
 
-FROM python:3.11-slim
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PORT=10000
-
+FROM node:22-alpine AS deps
 WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci --ignore-scripts
 
-# Install deps first (better layer caching: rebuilds are fast when only code changes)
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
 
-# Copy the app
-COPY app.py main.py config.py storage.py security.py routes_auth.py routes_dashboard.py routes_public.py ./
-COPY templates/ ./templates/
-COPY static/ ./static/
-
-# Writable dirs for JSON "database" + resume uploads.
-# NOTE: Render Free has an ephemeral filesystem — data resets on redeploy/restart
-# unless you attach a paid Persistent Disk and set DATA_DIR to it.
-RUN mkdir -p /app/data /app/static/uploads
-
-EXPOSE 10000
-
-# Render injects $PORT (default 10000). Must bind 0.0.0.0, NOT 127.0.0.1.
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"]
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Writable dirs for the JSON "database" + uploads (owned by app user).
+RUN mkdir -p /app/data /app/public/uploads && chown -R nextjs:nodejs /app/data /app/public/uploads
+USER nextjs
+VOLUME ["/app/data", "/app/public/uploads"]
+EXPOSE 3000
+# Hosts like Render inject $PORT; standalone server.js respects it.
+CMD ["sh", "-c", "node server.js --port ${PORT:-3000} --hostname 0.0.0.0"]

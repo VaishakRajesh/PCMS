@@ -1,5 +1,16 @@
 {
-  "username": "admin",
-  "password_hash": "$2b$12$pWTBUYPtO3HxTLcGK7QFLeDHVr9BZFucKFcN7rW9nRDqRFTyxtTlm",
-  "is_default": true
+  "users": [
+    {
+      "username": "vaishak",
+      "passwordHash": "$2a$10$j1y8yCz6UgMHKvGA/wur6uDWS9UQqQSq8Vn/hGvPEvNWvQPkQdkAq",
+      "slug": "vaishak",
+      "isDefault": true
+    },
+    {
+      "username": "anil",
+      "passwordHash": "$2a$10$IeBsMbwTDQ6oWjy2Hw1Fjeg0p6HHgN5qINe25fpCaJavJAUBMKlWG",
+      "slug": "anil",
+      "isDefault": true
+    }
+  ]
 }

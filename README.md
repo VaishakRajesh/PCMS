@@ -1,79 +1,109 @@
 # PortfolioCMS — Dynamic Portfolio Builder
 
-Fill in your details once in a dashboard, pick a design, and share your
-public portfolio link. Changing the design never deletes your content.
+Fill in your details once, pick a design, and share your public portfolio
+link. Changing the design never deletes your content.
 
-Stack: **Python FastAPI + Jinja2 HTML + plain CSS/JS + JSON files** (no database).
+Stack: **Next.js + React + TypeScript + Tailwind CSS + framer-motion + JSON files** (no database).
 
-## Quickstart (3 commands)
+## Quickstart
 
 ```bash
-pip install -r requirements.txt
-python main.py
+npm install
+npm run dev
 ```
 
-Then open **http://127.0.0.1:8000** in your browser.
+Then open **http://localhost:3000**.
 
-## Default login (change immediately!)
+```bash
+npm run build   # production build — must pass with zero errors
+npm start       # run the production build locally
+```
 
-| Field    | Value    |
-| -------- | -------- |
-| URL      | http://127.0.0.1:8000/login |
-| Username | `admin`  |
-| Password | `admin123` |
+Copy `.env.example` to `.env` and set a real `SESSION_SECRET` for anything
+shared. Dev works without it (insecure fallback, localhost only).
 
-After logging in, go to **Dashboard → Settings - change login** and set your
-own username/password. The yellow warning banner disappears once you do.
+## Demo logins (change immediately!)
 
-> Demo default only. Never deploy publicly with `admin/admin123`.
+| Username | Password | Portfolio |
+| -------- | -------- | --------- |
+| `vaishak` | `vaishak123` | http://localhost:3000/vaishak |
+| `anil` | `anil123` | http://localhost:3000/anil |
+
+Login at **http://localhost:3000/login** (no registration page by design).
+After login you land in your dashboard. Change your password anytime in
+**Dashboard → Settings** (current password required; the warning banner
+clears once the default is gone).
+
+> Demo defaults only. Never deploy publicly with these passwords.
 
 ## URLs
 
 | URL | What it is |
 | --- | ---------- |
-| `/` | Public portfolio (what visitors see) |
-| `/p/{slug}` | Same portfolio via its slug link (slug editable in dashboard) |
-| `/login`, `/logout` | Owner login / logout (no registration page) |
-| `/dashboard` | Owner editor (login required) |
-| `/docs` | Auto-generated API docs (great for learning FastAPI) |
+| `/` | Landing page with live demo links |
+| `/login` | Owner login (no registration) |
+| `/vaishak`, `/anil`, … | Public portfolio per JSON slug (`data/portfolios/<slug>.json`) |
+| `/dashboard` | Owner CMS: overview, content, design, media, settings (login required) |
 
-## What you can do in the dashboard
-
-- Edit profile, site title, slug, social links
-- Add/delete skills, projects, experience, education
-- Upload a **PDF resume** (max 5MB) → public page gets a Download button
-- Pick template + colors, show/hide and reorder sections
-- Add a new design: copy `templates/themes/minimal.html` to
-  `templates/themes/<name>.html` and edit it — it appears in the
-  dashboard dropdown automatically (no code changes)
-- Change your login credentials
+Each portfolio's browser title/description come from its own JSON settings.
 
 ## Project structure
 
 ```text
 PCMS/
-├── main.py               # entry point: python main.py
-├── config.py             # all settings/paths in one place
-├── storage.py            # JSON read/write (only file touching data/)
-├── security.py           # password hashing + login session helpers
-├── routes_public.py      # / and /p/{slug}
-├── routes_auth.py        # /login, /logout
-├── routes_dashboard.py   # /dashboard + all save/upload actions
-├── requirements.txt      # pip install -r requirements.txt
-├── templates/            # HTML pages (base/login/dashboard + themes/ designs)
-├── static/css/           # stylesheet (+ static/uploads/ for resumes)
-├── data/                 # auto-created: users.json, portfolio.json
-├── idea.md               # full product idea (long spec)
-└── AGENT.md              # rules for AI agents working on this repo
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx        # font, metadata, global CSS
+│   │   ├── page.tsx          # animated landing page
+│   │   ├── login/            # login form (page.tsx) + server action (actions.ts)
+│   │   ├── [slug]/page.tsx   # public portfolio: /vaishak, /anil, …
+│   │   ├── not-found.tsx     # unknown slug page
+│   │   └── globals.css       # Tailwind v4 + theme tokens
+│   ├── components/
+│   │   ├── templates/        # Modern.tsx (animated), Minimal.tsx (CSS-only)
+│   │   └── portfolio/ui.tsx  # Reveal, SectionTitle, theme vars, section order
+│   ├── lib/
+│   │   ├── types.ts          # the JSON data model (single source of truth)
+│   │   ├── json-db.ts        # atomic JSON read/write + first-boot seeds
+│   │   ├── session.ts        # jose cookie sessions (Edge-safe)
+│   │   ├── passwords.ts      # bcryptjs hashing (server-only)
+│   │   └── themes.ts         # template registry (add design = 1 file + 1 line)
+│   └── middleware.ts         # redirects logged-out /dashboard* → /login
+├── data/                     # auto-created: users.json, portfolios/*.json
+├── public/                   # static assets + uploads (served at /…)
+├── Dockerfile                # production multi-stage build (standalone)
+├── idea.md                   # full product spec (long)
+└── AGENT.md                  # rules for AI agents working on this repo
 ```
 
-## Notes
+## Add a new design (2 steps)
 
-- The public portfolio shows NO login links — the owner logs in by typing
-  `/login` in the browser address bar.
-- Storage is **JSON files** (`data/`), good for local/college demo — not for
-  serverless hosting with throwaway disks. The `storage.py` layer exists so a
-  PostgreSQL swap later won't rewrite the app.
-- Uploads accept **PDF only**, size + magic-byte checked, stored with random
-  names under `static/uploads/`.
-- See `AGENT.md` for contributor/agent conventions.
+1. Copy `src/components/templates/Minimal.tsx` → `src/components/templates/<Name>.tsx`, edit it (it receives the full `Portfolio` as prop `p`).
+2. Add one line to `TEMPLATES` in `src/lib/themes.ts` + one case in `src/app/[slug]/page.tsx`.
+
+## Deployment
+
+**Recommended: Docker on any VPS / Render / Fly** (persistent disk required):
+
+```bash
+docker build -t portfoliocms .
+docker run -p 3000:3000 \
+  -e SESSION_SECRET="long-random-string" \
+  -v pcms-data:/app/data -v pcms-uploads:/app/public/uploads \
+  portfoliocms
+```
+
+- Mount persistent volumes at `/app/data` (and `/app/public/uploads`), or
+  portfolios reset on every redeploy.
+- Set `SESSION_SECRET` env — logins break across restarts without a stable one.
+
+**Not recommended: Vercel / serverless.** Writable JSON files don't survive
+there (ephemeral filesystem) — every redeploy wipes portfolios. The isolated
+`src/lib/json-db.ts` layer exists precisely so a PostgreSQL swap later won't
+rewrite the app.
+
+## Roadmap
+
+- **Phase 1 (this):** scaffold, auth, public portfolios, 2 animated templates, docs, Docker.
+- **Phase 2 (done):** dashboard editor + resume upload API.
+- **Phase 3:** Developer / Creative / Professional templates, version history.

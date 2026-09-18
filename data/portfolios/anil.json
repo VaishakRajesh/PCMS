@@ -1,0 +1,115 @@
+{
+  "profile": {
+    "name": "Anil Kumar",
+    "title": "UI Engineer",
+    "tagline": "Interfaces with motion and meaning",
+    "bio": "Frontend engineer obsessed with animation, design systems and DX.",
+    "profileImage": "",
+    "resume": "",
+    "location": "India",
+    "email": "anil@example.com",
+    "phone": ""
+  },
+  "social": {
+    "github": "https://github.com/anil",
+    "linkedin": "",
+    "twitter": "",
+    "email": "anil@example.com"
+  },
+  "theme": {
+    "template": "modern",
+    "mode": "light",
+    "primaryColor": "#4f46e5",
+    "secondaryColor": "#8b5cf6",
+    "backgroundColor": "#ffffff",
+    "textColor": "#111827",
+    "borderRadius": "12px",
+    "animations": true
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "title": "Hero",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "about",
+      "type": "about",
+      "title": "About",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "skills",
+      "type": "skills",
+      "title": "Skills",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "projects",
+      "type": "projects",
+      "title": "Projects",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "experience",
+      "type": "experience",
+      "title": "Experience",
+      "visible": true,
+      "order": 5
+    },
+    {
+      "id": "education",
+      "type": "education",
+      "title": "Education",
+      "visible": true,
+      "order": 6
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "title": "Contact",
+      "visible": true,
+      "order": 7
+    }
+  ],
+  "skills": [
+    {
+      "name": "TypeScript",
+      "category": "Language",
+      "level": "Advanced"
+    },
+    {
+      "name": "Framer Motion",
+      "category": "Animation",
+      "level": "Advanced"
+    },
+    {
+      "name": "Tailwind CSS",
+      "category": "Styling",
+      "level": "Advanced"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Motion Gallery",
+      "description": "A showcase of production-grade web animations.",
+      "technologies": "Next.js, TypeScript",
+      "github": "",
+      "live": "",
+      "featured": true
+    }
+  ],
+  "experience": [],
+  "education": [],
+  "certifications": [],
+  "settings": {
+    "siteTitle": "Anil Kumar | UI Engineer",
+    "description": "Portfolio of Anil Kumar",
+    "slug": "anil"
+  }
+}

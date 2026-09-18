@@ -1,0 +1,115 @@
+{
+  "profile": {
+    "name": "Vaishak Rajesh",
+    "title": "Full Stack Developer",
+    "tagline": "Building modern web applications",
+    "bio": "I build fast, accessible web apps with React, Next.js and Node.",
+    "profileImage": "",
+    "resume": "",
+    "location": "India",
+    "email": "vaishak@example.com",
+    "phone": ""
+  },
+  "social": {
+    "github": "https://github.com/vaishak",
+    "linkedin": "",
+    "twitter": "",
+    "email": "vaishak@example.com"
+  },
+  "theme": {
+    "template": "modern",
+    "mode": "light",
+    "primaryColor": "#4f46e5",
+    "secondaryColor": "#8b5cf6",
+    "backgroundColor": "#ffffff",
+    "textColor": "#111827",
+    "borderRadius": "12px",
+    "animations": true
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "title": "Hero",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "about",
+      "type": "about",
+      "title": "About",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "skills",
+      "type": "skills",
+      "title": "Skills",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "projects",
+      "type": "projects",
+      "title": "Projects",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "experience",
+      "type": "experience",
+      "title": "Experience",
+      "visible": true,
+      "order": 5
+    },
+    {
+      "id": "education",
+      "type": "education",
+      "title": "Education",
+      "visible": true,
+      "order": 6
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "title": "Contact",
+      "visible": true,
+      "order": 7
+    }
+  ],
+  "skills": [
+    {
+      "name": "React",
+      "category": "Frontend",
+      "level": "Advanced"
+    },
+    {
+      "name": "Next.js",
+      "category": "Frontend",
+      "level": "Advanced"
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend",
+      "level": "Intermediate"
+    }
+  ],
+  "projects": [
+    {
+      "name": "PortfolioCMS",
+      "description": "Dynamic portfolio builder with themes and live preview.",
+      "technologies": "Next.js, TypeScript",
+      "github": "",
+      "live": "",
+      "featured": true
+    }
+  ],
+  "experience": [],
+  "education": [],
+  "certifications": [],
+  "settings": {
+    "siteTitle": "Vaishak Rajesh | Full Stack Developer",
+    "description": "Portfolio of Vaishak Rajesh",
+    "slug": "vaishak"
+  }
+}

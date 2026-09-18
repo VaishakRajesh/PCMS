@@ -1,9 +1,10 @@
-__pycache__/
-*.py[cod]
-*.pyo
-.venv/
-venv/
+node_modules/
+.next/
+out/
+dist/
+*.log
 .env
+.env*.local
 .git/
 .gitignore
 README.md
@@ -11,6 +12,13 @@ idea.md
 AGENT.md
 data/*.json
 data/*.tmp
+public/uploads/*
+!public/uploads/.gitkeep
+# Python leftovers from the previous FastAPI version (delete when ready)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
 static/uploads/*
 !static/uploads/.gitkeep
 .pytest_cache/

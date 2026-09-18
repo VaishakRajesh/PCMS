@@ -1,0 +1,25 @@
+# Next.js build output + dependencies (recreated by npm install / build)
+node_modules/
+.next/
+out/
+dist/
+
+# Runtime secrets + logs (never commit)
+.env
+.env*.local
+*.log
+
+# Runtime JSON data (auto-seeded on boot; user portfolios live here).
+# Committing them would leak password hashes, so they stay local.
+# On servers, attach a persistent volume at ./data instead.
+data/*.json
+data/*.tmp
+
+# Uploaded resumes (runtime files, may contain personal data)
+public/uploads/*
+
+# Python leftovers from the previous FastAPI version (delete when ready)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
