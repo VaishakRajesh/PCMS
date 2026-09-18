@@ -11,6 +11,7 @@ const MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 days
 export interface SessionPayload {
   username: string;
   slug: string; // which portfolio this owner may edit
+  [key: string]: unknown; // index signature required by jose SignJWT (JWTPayload)
 }
 
 function secretKey(): Uint8Array {
@@ -43,9 +44,10 @@ export async function verifySession(): Promise<SessionPayload | null> {
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, secretKey());
-    if (typeof payload.username !== "string" || typeof payload.slug !== "string")
-      return null;
-    return { username: payload.username, slug: payload.slug };
+    const username = payload.username;
+    const slug = payload.slug;
+    if (typeof username !== "string" || typeof slug !== "string") return null;
+    return { username, slug };
   } catch {
     return null; // expired / tampered / wrong secret -> logged out
   }
